@@ -1,0 +1,31 @@
+title: coloc
+url: https://chr1swallace.github.io/coloc
+template:
+  params:
+    bootswatch: simplex
+news:
+articles:
+- title: Vignettes
+  navbar: ~
+  contents:
+  - a01_intro
+  - a02_data
+  - a03_enumeration
+  - a04_sensitivity
+  - a06_SuSiE
+reference:
+  - title: Bayesian enumeration of hypotheses
+    desc: Two trait colocalisation and single trait fine mapping under
+      single causal variant assumptions
+    contents:
+      - '`coloc.abf`'
+      - '`finemap.abf`'
+  - title: Sensitivity analysis
+    desc: Check how robust inference is to changing prior parameter values
+    contents:
+      - '`sensitivity`'
+  - title: Relaxing the single variant assumption
+    desc: use conditioning or masking to account for multiple independent causal variants per trait
+    contents:
+      - '`coloc.susie`'
+      - '`runsusie`'

@@ -1,0 +1,15 @@
+cran-comments.md
+_pkgdown.yaml
+pkgdown
+docs
+Rjunk
+R/junkyard.R
+R/bma.R
+inst/sticker.R
+vignettes/.*.org
+errors
+^\.travis\.yml$
+^doc$
+^Meta$
+FAQ.md
+^CRAN-RELEASE$

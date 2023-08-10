@@ -1,0 +1,67 @@
+---
+title: "Coloc: sensitivity to prior values"
+author: "Chris Wallace"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Coloc: sensitivity to prior values}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Sensitivity analysis
+
+Specifying prior values for coloc.abf() is important, as results can be dependent on these values.  Defaults of \(p_1=p_2=10^{-4}\) seem justified in a wide range of scenarios, because these broadly correspond to a 99% belief that there is true association when we see \(p<5\times 10^{-8}\) in a GWAS.  However, choice of \(p_{12}\) is more difficult.  We hope the [coloc explorer app](https://chr1swallace.shinyapps.io/coloc-priors/) will be helpful in exploring what various choices mean, at a per-SNP and per-hypothesis level.  However, having conducted an enumeration-based coloc analysis, it is still helpful to check that any inference about colocalisation is robust to variations in prior values specified.
+
+Continuing on from [the last vignette](./a03_enumeration.html), we have
+
+
+```{r prep}
+library(coloc)
+data(coloc_test_data)
+attach(coloc_test_data)
+my.res <- coloc.abf(dataset1=D1,
+                    dataset2=D2,
+                    p12=1e-6)
+my.res
+```
+
+A sensitivity analysis can be used, post-hoc, to determine the range of prior probabilities for which a conclusion is still supported.  The sensitivity() function shows this for variable \(p_{12}\) in the bottom right plot, along with the prior probabilities of each hypothesis, which may help decide whether a particular range of \(p_{12}\) is valid.
+The green region shows the region - the set of values of \(p_{12}\) - for which \(H_4 > 0.5\) - the rule that was specified.  In this case, the conclusion of colocalisation looks quite robust.
+On the left (optionally) the input data are also presented, with shading to indicate the posterior probabilities that a SNP is causal if \(H_4\) were true.  This can be useful to indicate serious discrepancies also.
+
+```{r sens, fig.width=8,fig.height=6  }
+sensitivity(my.res,rule="H4 > 0.5") 
+```
+
+
+Let's fake a smaller dataset where that won't be the case, by increasing varbeta:
+
+```{r ,echo=FALSE,results="hide"  }
+D1a=D1;
+D1a$varbeta=D1$varbeta * sqrt(4)
+D1a$N=D1a$N/4
+D2a=D2;
+D2a$varbeta=D2$varbeta * sqrt(2)
+D2a$N=D2a$N/2
+```
+
+Now, colocalisation is very dependent on the value of \(p_{12}\):
+
+```{r sens2, fig.width=8,fig.height=6  }
+my.res <- coloc.abf(dataset1=D1a,
+                    dataset2=D2a,
+                    p12=1e-6)
+my.res
+sensitivity(my.res,rule="H4 > 0.5") 
+```
+
+In this case, we find there is evidence for colocalisation according
+to a rule \(H_4>0.5\) only for \(p_{12} > 10^{-6}\), which corresponds to an *a priori* belief that \(P(H_4) \simeq P(H_3)\).  This means but you would need to think it reasonable that \(H_4\) is equally likely as \(H_3\) to begin with to find these data convincing.
+
+Note, the syntax can also
+consider more complicated rules:
+
+```{r sens3, fig.width=8,fig.height=6  }
+sensitivity(my.res,rule="H4 > 3*H3 & H0 < 0.1") 
+```
+

@@ -1,0 +1,23 @@
+c(bibentry("article",
+           header="Original coloc proposal",
+           author = "C Giambartolomei and et. al",
+           title = "Bayesian Test for Colocalisation between Pairs of Genetic Association Studies Using Summary Statistics",
+           journal = "PLOS Genetics",
+           year = "2014",
+           url = "https://doi.org/10.1371/journal.pgen.1004383"
+           ),
+  bibentry("article",
+           header="About choosing priors and conditioning",
+           author = "C Wallace",
+           title = "{Eliciting priors and relaxing the single causal variant assumption in colocalisation analyses}",
+           journal = "PLOS Genetics",
+           year = 2020,
+           url = "https://doi.org/10.1371/journal.pgen.1008720"),
+  bibentry("article",
+           header="Using SuSiE to accomodate multiple causal variants",
+           author = "C Wallace",
+           title = "{A more accurate method for colocalisation analysis allowing for multiple causal variants}",
+           journal = "{bioRxiv}",
+           year = 2021,
+           url = "https://doi.org/10.1101/2021.02.23.432421")
+  )

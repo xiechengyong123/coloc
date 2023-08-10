@@ -1,0 +1,82 @@
+---
+title: "Coloc: a package for colocalisation analyses"
+author: "Chris Wallace"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Coloc: a package for colocalisation analyses}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+<a id="org63a948f"></a>
+
+# A brief outline of colocalisation analysis
+
+The coloc package can be used to perform genetic colocalisation
+analysis of two potentially related phenotypes, to ask whether they
+share common genetic causal variant(s) in a given region.  There are a
+few key references which this vignette will not duplicate (see below).
+
+In brief, two approaches can be implemented.  The proportional testing approach
+<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>  <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> has now been moved to its own package, coloc.prop.
+
+This package implements the more population enumeration approach.
+
+You can read about how to prepare your data in [this vignette](a02_data.html) or read the vignettes listed in one of the sections below to understand how coloc works.
+
+## A single causal variant assumption
+
+ Claudia Giambartolomei and
+Vincent Plagnol proposed the enumeration method, which makes use of Jon
+Wakefield's work on determining approximate Bayes Factors from p
+values <sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup> to
+generate a colocalisation analysis <sup><a id="fnr.4"
+class="footref" href="#fn.4">4</a></sup>, implemented in the function
+`coloc.abf()`.  By assuming there is at most one causal variant
+per trait, every possible configuration can be individually enumerated
+and evaluated, and aggregating over these allows us to gauge the
+relative support for models which support colocalisation to those that
+don't.
+
+You can see more about the enumeration approach on
+[this blogpost](https://haldanessieve.org/2013/05/21/our-paper-bayesian-test-for-co-localisation-between-pairs-of-genetic-association-studies-using-summary-statistics/).
+
+See vignette: [enumeration](a03_enumeration.html)
+
+## Sensitivity analysis
+
+As a Bayesian method, coloc.abf() requires the user to specify prior probabilities of SSNP causality and colocalisation.  Post-hoc sensitivity analysis can be used to assess whether results are robust across a range of plausible priors.
+
+See vignette: [sensitivity](a04_sensitivity.html)
+
+## Deprecated: relaxing the single causal variant assumption through conditioning
+
+The single variant assumption can be relaxed through conditioning.  We
+have implemented a conditioning step within coloc, which we hope
+will increase use of conditioning, and proposed an alternative,
+masking.
+
+See vignette: [conditioning/masking](a05_conditioning.html)
+
+## An improved approach to relaxing the single causal variant assumption: SuSiE
+
+The sum of single effects regression method proposed by Wang et al <sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup> can instead simultaneously decompose multiple signals from the marginal summary stats, and appears to work better than conditioning.
+
+See vignette: [SuSiE](a06_SuSiE.html)
+
+
+
+# Footnotes
+
+<sup><a id="fn.1" href="#fnr.1">1</a></sup> <https://pubmed.ncbi.nlm.nih.gov/19039033/>
+
+<sup><a id="fn.2" href="#fnr.2">2</a></sup> <https://doi.org/10.1002/gepi.21765>
+
+<sup><a id="fn.3" href="#fnr.3">3</a></sup> <https://pubmed.ncbi.nlm.nih.gov/18642345/>
+
+<sup><a id="fn.4" href="#fnr.4">4</a></sup> <https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004383>
+
+<sup><a id="fn.5" href="#fnr.5">5</a></sup> <https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1005272>
+
+<sup><a id="fn.5" href="#fnr.6">6</a></sup> <https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12388>
